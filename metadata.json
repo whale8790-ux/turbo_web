@@ -1,0 +1,6 @@
+{
+  "name": "刘昊然Turbo 个人作品集",
+  "description": "刘昊然Turbo 的 AI 产品经理与独立开发者高保真作品集网站，展示 AI Agent、AIGC 应用与策略增长的产品设计与开发落地成果。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
