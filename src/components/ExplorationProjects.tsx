@@ -112,8 +112,7 @@ export default function ExplorationProjects({ activeStyle = 'cyber', isDark = tr
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-2">
           {activeStyle === 'editorial' ? (
             <>
-              <span className={`text-xs font-serif italic tracking-wider block mb-2 transition-colors duration-300 ${isDark ? 'text-stone-400' : 'text-stone-500'}`}>Experimental Ideas & Prototyping</span>
-              <h2 className={`text-3xl sm:text-4xl font-serif transition-colors duration-300 ${isDark ? 'text-stone-100' : 'text-stone-900'}`}>探索原型项目 (Sandbox)</h2>
+              <h2 className={`text-3xl sm:text-4xl font-serif transition-colors duration-300 ${isDark ? 'text-stone-100' : 'text-stone-900'}`}>探索项目</h2>
               <p className={`text-sm font-serif italic pt-1 transition-colors duration-300 ${isDark ? 'text-[#eae6df]' : 'text-stone-700'}`}>“以最快速度将产品想法进行原型拟合与功能打磨”</p>
             </>
           ) : activeStyle === 'geometric' ? (

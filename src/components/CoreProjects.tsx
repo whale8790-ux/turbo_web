@@ -35,11 +35,8 @@ export default function CoreProjects({ onScrollToSection, activeStyle = 'cyber',
           
           {/* Module Header */}
           <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-            <span className={`text-xs font-serif italic tracking-wider block mb-3.5 transition-colors duration-300 ${isDark ? 'text-stone-400' : 'text-stone-500'}`}>
-              Selected Works & Retrospectives
-            </span>
             <h2 className={`text-3xl sm:text-4xl font-serif tracking-tight transition-colors duration-300 ${isDark ? 'text-stone-100' : 'text-stone-900'}`}>
-              核心落地项目 (Chapters)
+              核心项目介绍
             </h2>
             <p className={`text-sm font-serif italic transition-colors duration-300 ${isDark ? 'text-stone-300' : 'text-stone-600'}`}>
               “以科学态度探索人机协同界面，实现大模型核心技术深度商业化封包”
