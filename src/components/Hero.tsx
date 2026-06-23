@@ -94,7 +94,7 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
                   : 'border-stone-800 text-stone-900 bg-transparent hover:bg-stone-900 hover:text-[#faf8f4]'
               }`}
             >
-              阅读落地案例 (Chapters) →
+              查看核心项目拆解 →
             </button>
             <button
               onClick={() => onScrollToSection('continue-hear')}
@@ -104,7 +104,7 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
                   : 'border-stone-400 text-stone-700 hover:text-stone-900 hover:border-stone-900'
               }`}
             >
-              阅读简历 & 阁下联系
+              简历与联系
             </button>
           </motion.div>
 

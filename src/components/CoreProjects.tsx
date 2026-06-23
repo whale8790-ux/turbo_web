@@ -156,7 +156,7 @@ export default function CoreProjects({ onScrollToSection, activeStyle = 'cyber',
                 <div className={`mt-4 text-[11px] italic font-serif flex items-center justify-center space-x-2 w-full transition-colors duration-300 ${
                   isDark ? 'text-stone-400' : 'text-stone-500'
                 }`}>
-                  <span>✎ 点击可体验功能</span>
+                  <span>{isChat ? '✎ 点击候选话术，体验 AI 辅助回复流程' : '✎ 点击生成按钮，体验人像风格化流程'}</span>
                 </div>
               </div>
 

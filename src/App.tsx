@@ -10,7 +10,7 @@ import CoreProjects from './components/CoreProjects';
 import ExplorationProjects from './components/ExplorationProjects';
 import Footer from './components/Footer';
 import { usePersistentState } from './hooks/usePersistentState';
-import { FileText, ArrowUp, Sparkles, BookOpen, LayoutGrid, Compass, ShieldAlert, Sun, Moon } from 'lucide-react';
+import { FileText, ArrowUp, Sparkles, BookOpen, LayoutGrid, Compass, Sun, Moon, X } from 'lucide-react';
 
 type VisualStyle = 'cyber' | 'editorial' | 'geometric';
 
@@ -27,20 +27,25 @@ const STYLES_SANDBOX_LIST = [
   { id: 'geometric', label: '几何包豪斯', icon: Compass, color: 'text-red-500' }
 ] as const;
 
+const getIsDarkForOpenTime = () => {
+  const hour = new Date().getHours();
+  return hour >= 19 || hour < 7;
+};
+
 export default function App() {
   const [activeSection, setActiveSection] = useState('hero-section');
   const [scrolled, setScrolled] = useState(false);
+  const [isSandboxOpen, setIsSandboxOpen] = useState(false);
   const [activeStyle, setActiveStyle] = usePersistentState<VisualStyle>('portfolio-style', 'cyber');
-  const [isDark, setIsDark] = usePersistentState<boolean>('portfolio-dark', true);
+  const [isDark, setIsDark] = useState<boolean>(getIsDarkForOpenTime);
 
-  // Auto set theme default based on active style but allow custom toggle
   useEffect(() => {
-    if (activeStyle === 'cyber') {
-      setIsDark(true);
-    } else {
-      setIsDark(false);
+    const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+    if (!themeColor) {
+      return;
     }
-  }, [activeStyle]);
+    themeColor.content = isDark ? '#0a0b10' : '#f4f5f7';
+  }, [isDark]);
 
   // Monitor scroll height to add premium background blurring in header navigation
   useEffect(() => {
@@ -254,58 +259,100 @@ export default function App() {
       </motion.header>
 
       {/* STYLE SANDBOX FLOATING CONTROL PANEL */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 p-2.5 bg-zinc-950/95 border-2 border-zinc-800/90 rounded-2xl flex flex-col items-center gap-1.5 shadow-[0_15px_40px_rgba(0,0,0,0.8)] backdrop-blur-md max-w-sm sm:max-w-xl">
-        <div className="flex items-center space-x-1 mb-1 shadow-sm px-2 text-[10px] uppercase font-mono tracking-wider font-bold text-zinc-400">
-          <Sparkles className="w-3.5 h-3.5 text-yellow-400 animate-spin [animation-duration:8s]" />
-          <span>视觉设计风格对比沙盒 // Creative Sandbox</span>
-        </div>
-        
-        <div className="flex items-center gap-2 font-sans">
-          <div className="flex items-center gap-1">
-            {STYLES_SANDBOX_LIST.map((style) => {
-              const isSelected = activeStyle === style.id;
-              const IconComp = style.icon;
-
-              return (
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+        <AnimatePresence>
+          {isSandboxOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 12, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 8, scale: 0.96 }}
+              transition={{ duration: 0.18, ease: 'easeOut' }}
+              className="w-[min(calc(100vw-48px),420px)] p-3 bg-zinc-950/95 border-2 border-zinc-800/90 rounded-2xl flex flex-col items-stretch gap-2 shadow-[0_15px_40px_rgba(0,0,0,0.8)] backdrop-blur-md"
+            >
+              <div className="flex items-center justify-between gap-3 px-1 text-[10px] uppercase font-mono tracking-wider font-bold text-zinc-400">
+                <div className="flex items-center gap-1.5 min-w-0">
+                  <Sparkles className="w-3.5 h-3.5 shrink-0 text-yellow-400 animate-spin [animation-duration:8s]" />
+                  <span className="truncate">视觉设计风格对比沙盒 // Creative Sandbox</span>
+                </div>
                 <button
-                  key={style.id}
-                  onClick={() => {
-                    setActiveStyle(style.id);
-                  }}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer ${
-                    isSelected 
-                      ? 'bg-zinc-800 text-white ring-2 ring-zinc-700 shadow-md' 
-                      : 'text-zinc-500 hover:text-zinc-400 hover:bg-zinc-900'
-                  }`}
+                  type="button"
+                  onClick={() => setIsSandboxOpen(false)}
+                  className="p-1 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900 transition-colors cursor-pointer"
+                  aria-label="收起视觉风格沙盒"
+                  title="收起"
                 >
-                  <IconComp className={`w-3.5 h-3.5 ${style.color}`} />
-                  <span>{style.label}</span>
+                  <X className="w-3.5 h-3.5" />
                 </button>
-              );
-            })}
-          </div>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 font-sans">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-1">
+                  {STYLES_SANDBOX_LIST.map((style) => {
+                    const isSelected = activeStyle === style.id;
+                    const IconComp = style.icon;
 
-          {/* Divider line */}
-          <div className="w-[1px] h-6 bg-zinc-800 self-center mx-1" />
+                    return (
+                      <button
+                        key={style.id}
+                        onClick={() => {
+                          setActiveStyle(style.id);
+                        }}
+                        className={`flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer whitespace-nowrap ${
+                          isSelected 
+                            ? 'bg-zinc-800 text-white ring-2 ring-zinc-700 shadow-md' 
+                            : 'text-zinc-500 hover:text-zinc-400 hover:bg-zinc-900'
+                        }`}
+                      >
+                        <IconComp className={`w-3.5 h-3.5 ${style.color}`} />
+                        <span>{style.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
 
-          {/* Dark / Light toggle button */}
-          <div className="flex items-center bg-zinc-900 rounded-xl p-0.5 border border-zinc-800/80">
-            <button
-              onClick={() => setIsDark(false)}
-              className={`p-1.5 rounded-lg transition-all ${!isDark ? 'bg-zinc-700 text-yellow-400 shadow-sm' : 'text-zinc-500 hover:text-zinc-400'}`}
-              title="浅色模式"
-            >
-              <Sun className="w-3.5 h-3.5" />
-            </button>
-            <button
-              onClick={() => setIsDark(true)}
-              className={`p-1.5 rounded-lg transition-all ${isDark ? 'bg-zinc-700 text-cyan-300 shadow-sm' : 'text-zinc-500 hover:text-zinc-400'}`}
-              title="深色模式"
-            >
-              <Moon className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        </div>
+                <div className="hidden sm:block w-[1px] h-6 bg-zinc-800 self-center mx-1" />
+
+                <div className="flex items-center justify-center bg-zinc-900 rounded-xl p-0.5 border border-zinc-800/80">
+                  <button
+                    type="button"
+                    onClick={() => setIsDark(false)}
+                    aria-label="浅色模式"
+                    aria-pressed={!isDark}
+                    className={`p-1.5 rounded-lg transition-all cursor-pointer ${!isDark ? 'bg-zinc-700 text-yellow-400 shadow-sm' : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800'}`}
+                    title="切换为浅色模式"
+                  >
+                    <Sun className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setIsDark(true)}
+                    aria-label="深色模式"
+                    aria-pressed={isDark}
+                    className={`p-1.5 rounded-lg transition-all cursor-pointer ${isDark ? 'bg-zinc-700 text-cyan-300 shadow-sm' : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800'}`}
+                    title="切换为深色模式"
+                  >
+                    <Moon className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <button
+          type="button"
+          onClick={() => setIsSandboxOpen((current) => !current)}
+          aria-expanded={isSandboxOpen}
+          className={`flex items-center gap-2 px-3.5 py-2.5 rounded-2xl border-2 bg-zinc-950/95 backdrop-blur-md shadow-[0_15px_40px_rgba(0,0,0,0.55)] transition-all cursor-pointer ${
+            isSandboxOpen
+              ? 'border-zinc-700 text-zinc-200'
+              : 'border-cyan-500/50 text-zinc-100 hover:border-cyan-400 hover:text-white'
+          }`}
+          title={isSandboxOpen ? '收起视觉风格沙盒' : '展开视觉风格沙盒'}
+        >
+          <LayoutGrid className="w-4 h-4 text-cyan-300" />
+          <span className="text-xs font-bold">视觉风格</span>
+        </button>
       </div>
 
       {/* MAIN LAYOUT */}
