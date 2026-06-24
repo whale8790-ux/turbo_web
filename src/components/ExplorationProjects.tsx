@@ -6,7 +6,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { EXPLORATION_PROJECTS } from '../data';
-import { Sparkles, Terminal, BookOpen, Dumbbell, ArrowUpRight, X, Search, Check, Send } from 'lucide-react';
+import { Sparkles, Terminal, BookOpen, Gauge, ArrowUpRight, X, Search, Check, Send } from 'lucide-react';
 
 interface ExplorationProjectsProps {
   activeStyle?: 'cyber' | 'editorial' | 'geometric';
@@ -125,7 +125,7 @@ export default function ExplorationProjects({ activeStyle = 'cyber', isDark = tr
             <div className={`border-l-8 pl-4 text-left transition-colors duration-300 space-y-1 ${isDark ? 'border-zinc-700' : 'border-red-500'}`}>
               <span className={`text-xs font-mono font-bold block pb-1.5 tracking-widest uppercase transition-colors duration-300 ${isDark ? 'text-zinc-500' : 'text-zinc-400'}`}>EXPERIMENTAL BLUEPRINTS //</span>
               <h2 className={`text-3xl font-black uppercase tracking-tighter transition-colors duration-300 ${isDark ? 'text-zinc-100' : 'text-zinc-900'}`}>探索项目</h2>
-              <p className={`text-xs mt-1 transition-colors duration-300 ${isDark ? 'text-zinc-400' : 'text-zinc-500'}`}>独立建立的敏捷原件验证场，验证产品在新赛道中的承载模型优势。</p>
+              <p className={`text-xs mt-1 transition-colors duration-300 ${isDark ? 'text-zinc-400' : 'text-zinc-500'}`}>基于 AI Coding 能力独立完成的原型实验，快速验证产品想法与形态。</p>
             </div>
           ) : (
             <>
@@ -157,8 +157,8 @@ export default function ExplorationProjects({ activeStyle = 'cyber', isDark = tr
               IconComponent = BookOpen;
               themeAccent = activeStyle === 'editorial' ? (isDark ? 'text-stone-300' : 'text-stone-700') : 'text-violet-500';
               overlayKey = 'learn-page';
-            } else if (proj.id === 'fitness-tracker') {
-              IconComponent = Dumbbell;
+            } else if (proj.id === 'ai-quota-monitor') {
+              IconComponent = Gauge;
               themeAccent = activeStyle === 'editorial' ? (isDark ? 'text-stone-300' : 'text-stone-700') : 'text-rose-500';
             }
 
@@ -242,7 +242,18 @@ export default function ExplorationProjects({ activeStyle = 'cyber', isDark = tr
                             ? isDark ? 'bg-zinc-800 text-zinc-100' : 'bg-zinc-100 border border-zinc-900' 
                             : isDark ? 'bg-zinc-900 text-cyan-400' : 'bg-zinc-50 border border-zinc-200'
                       } ${themeAccent}`}>
-                        <IconComponent className="w-4 h-4" />
+                        {proj.id === 'learn-page' ? (
+                          <motion.div
+                            animate={{ rotateY: [0, 180, 360] }}
+                            transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+                            style={{ transformStyle: 'preserve-3d' }}
+                            className="w-4 h-4 flex items-center justify-center"
+                          >
+                            <IconComponent className="w-4 h-4" />
+                          </motion.div>
+                        ) : (
+                          <IconComponent className="w-4 h-4" />
+                        )}
                       </div>
                       <h3 className={textTitleClass}>
                         {proj.name}
@@ -300,7 +311,7 @@ export default function ExplorationProjects({ activeStyle = 'cyber', isDark = tr
                       onClick={() => setActiveOverlay(overlayKey)}
                       className={ctaClass}
                     >
-                      <span>启用交互 Demo 原型</span>
+                      <span>内部测试中</span>
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </button>
                   ) : (
@@ -311,7 +322,7 @@ export default function ExplorationProjects({ activeStyle = 'cyber', isDark = tr
                           ? isDark ? 'bg-zinc-900 border-2 border-dashed border-zinc-800 text-zinc-500' : 'bg-zinc-100 border-2 border-dashed border-zinc-300 text-zinc-400' 
                           : isDark ? 'border border-zinc-900 bg-zinc-950/20 text-zinc-500 rounded-xl' : 'border border-zinc-200 bg-zinc-50 text-zinc-400 rounded-xl'
                     }`}>
-                      深度设计构建中 (预留入口)
+                      开发中
                     </div>
                   )}
                 </div>
@@ -412,12 +423,6 @@ export default function ExplorationProjects({ activeStyle = 'cyber', isDark = tr
                   </div>
                 )}
 
-                <div className={`text-[11px] leading-relaxed text-left border-t pt-3 flex gap-2 transition-colors duration-300 ${
-                  isDark ? 'border-zinc-800 text-zinc-500' : 'border-zinc-200 text-zinc-600'
-                }`}>
-                  <Sparkles className="w-4 h-4 text-cyan-500 flex-shrink-0" />
-                  <span>在实际产品中，本智能体将自主进行 API 检索与岗位 JD 的向量表征关联，一秒协助求职者在复杂的大盘中检索、诊断并生成面试底牌。</span>
-                </div>
               </div>
             </motion.div>
           </motion.div>

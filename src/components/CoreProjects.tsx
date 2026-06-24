@@ -228,7 +228,7 @@ export default function CoreProjects({ onScrollToSection, activeStyle = 'cyber',
               <div className={`lg:col-span-6 p-6 sm:p-8 md:p-10 space-y-6 flex flex-col justify-between transition duration-200 relative ${
                 isDark ? 'bg-zinc-900 hover:bg-zinc-800' : 'bg-[#efeff4] hover:bg-white'
               }`}>
-                <div className="absolute top-0 left-0 py-1 px-3 bg-[#e11d48] text-white font-mono text-[10px] font-bold">
+                <div className="absolute top-0 left-0 py-1 px-3 bg-red-600 text-white font-mono text-[10px] font-bold">
                   0{activeProjectIdx + 1}
                 </div>
 
@@ -284,8 +284,10 @@ export default function CoreProjects({ onScrollToSection, activeStyle = 'cyber',
                 {/* key reflection block */}
                 <div className={`pt-4 border-t transition-colors duration-300 ${isDark ? 'border-zinc-800' : 'border-zinc-200'}`}>
                   <span className="text-[9px] font-mono font-black text-zinc-400 uppercase block mb-1">RETROSPECTIVE OUTCOME //</span>
-                  <p className={`text-xs italic font-medium leading-relaxed font-serif p-3 border transition-colors duration-300 ${
-                    isDark ? 'bg-zinc-950 border-zinc-800 text-zinc-300' : 'bg-white border-zinc-200 text-zinc-700'
+                  <p className={`text-sm italic font-medium leading-relaxed font-sans p-4 border border-l-4 transition-colors duration-300 ${
+                    isDark
+                      ? 'bg-zinc-950 border-zinc-800 border-l-zinc-500 text-zinc-300'
+                      : 'bg-white border-zinc-200 border-l-zinc-900 text-zinc-700'
                   }`}>
                     “{proj.reflection}”
                   </p>

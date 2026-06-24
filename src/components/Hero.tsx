@@ -3,8 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Sparkles, FileText, ArrowRight, Layers, Target, Compass, CornerRightDown, Layers3, Activity } from 'lucide-react';
+import TerminalStatus from './hero/TerminalStatus';
+import ContactModal from './hero/ContactModal';
 
 interface HeroProps {
   onScrollToSection: (id: string) => void;
@@ -13,6 +16,11 @@ interface HeroProps {
 }
 
 export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark = true }: HeroProps) {
+  const [showContactModal, setShowContactModal] = useState(false);
+  const contactInfo = {
+    wechat: 'turboss7',
+    email: 'turbo707@icloud.com',
+  };
   const heroMetrics = [
     { label: 'C端核心产品经验', value: '5年+', highlight: '海外 & 策略增长' },
     { label: '主导AI项目落地产值', value: '千万级', highlight: '从0到1商业化' },
@@ -42,7 +50,7 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
               transition={{ duration: 0.8 }}
               className={`text-4xl sm:text-5xl lg:text-6xl font-serif tracking-normal leading-tight transition-colors duration-300 ${isDark ? 'text-[#f7f5f0]' : 'text-stone-900'}`}
             >
-              刘昊然 <span className={`italic font-normal transition-colors duration-300 ${isDark ? 'text-stone-300' : 'text-stone-700'}`}>Turbo</span>
+              侯瑛琪 <span className={`italic font-normal transition-colors duration-300 ${isDark ? 'text-stone-300' : 'text-stone-700'}`}>Turbo</span>
               <span className={`block text-xl sm:text-2xl lg:text-3xl mt-4 font-sans font-light tracking-wide transition-colors duration-300 ${isDark ? 'text-stone-400' : 'text-stone-600'}`}>
                 以人文视角设计人机协同，用客观数据验证商业增长
               </span>
@@ -122,33 +130,6 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
   // 3. GEOMETRIC BALANCE STYLE
   // ==========================
   if (activeStyle === 'geometric') {
-    // Selected Work · 首屏战绩 + 锚点跳转 (方案 1+2 混合)
-    const selectedWork = [
-      {
-        idx: '01',
-        name: 'AI 聊天助手',
-        metric: '+17pp',
-        metricLabel: '双向会话渗透率',
-        target: 'core-projects',
-        tag: 'AI AGENT',
-      },
-      {
-        idx: '02',
-        name: 'AIGC 人像生成',
-        metric: '+20pp',
-        metricLabel: '生成结果保存率',
-        target: 'core-projects',
-        tag: 'AIGC',
-      },
-      {
-        idx: '03',
-        name: '求职 Agent',
-        metric: 'LIVE',
-        metricLabel: '可交互 Demo',
-        target: 'exploration-projects',
-        tag: 'EXPLORE',
-      },
-    ];
     return (
       <section id="hero-section" className={`relative pt-24 pb-16 lg:pt-32 lg:pb-24 overflow-hidden transition-colors duration-300 border-b-2 ${
         isDark ? 'bg-[#09090b] text-zinc-100 border-zinc-800' : 'bg-[#efeff4] text-zinc-900 border-zinc-900'
@@ -161,7 +142,7 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
 
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
-          <div className="lg:col-span-8 space-y-6 text-left">
+          <div className="lg:col-span-7 space-y-6 text-left">
             <motion.div 
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
@@ -173,7 +154,7 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
             </motion.div>
 
             <h1 className="text-4xl sm:text-6xl font-black uppercase tracking-tighter leading-none">
-              刘昊然 TURBO
+              侯瑛琪 TURBO
               <span className="block text-xl sm:text-2xl tracking-normal font-bold text-red-600 mt-2 normal-case text-left">
                 [ AI 产品经理 ｜ 独立开发者 ]
               </span>
@@ -182,7 +163,7 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
             <p className={`text-sm sm:text-base font-sans max-w-xl leading-relaxed border-l-4 pl-4 font-medium ${
               isDark ? 'text-zinc-300 border-zinc-800' : 'text-zinc-700 border-zinc-900'
             }`}>
-              5年+ C端前线经验。主攻 AIGC 与智能 Agent 体验，擅长敏捷建模，将算法不可控性封装为100%可控的高留存、高变现引擎。
+              聚焦 AI 产品落地，善于将 LLM 能力嵌入对话、表达与创作。从场景拆解、Prompt 策略到效果评估，推动想法快速转化为可体验的产品原型。
             </p>
 
             <div className="flex flex-wrap gap-4 pt-4">
@@ -194,81 +175,35 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
                     : 'bg-zinc-900 hover:bg-zinc-800 text-white border-zinc-900'
                 }`}
               >
-                查看项目 / DEPLOYED PROJECTS
+                查看项目 / SELECTED WORK
               </button>
               <button
-                onClick={() => onScrollToSection('continue-hear')}
+                onClick={() => setShowContactModal(true)}
                 className={`px-6 py-3 text-xs font-black uppercase tracking-wider transition-all cursor-pointer border-2 ${
                   isDark 
                     ? 'bg-transparent hover:bg-zinc-900 text-zinc-100 border-zinc-700' 
                     : 'bg-white hover:bg-zinc-100 text-zinc-900 border-zinc-900'
                 }`}
               >
-                下载简历 / DOWNLOAD CV
+                立即联系 / GET IN TOUCH
               </button>
             </div>
           </div>
 
           {/* Right Geometric Score Card Panel */}
-          <div className="lg:col-span-4">
-            <div className={`border-4 p-6 flex flex-col justify-between space-y-6 relative transition-colors duration-300 ${
-              isDark ? 'bg-zinc-900 border-zinc-700' : 'bg-white border-zinc-900'
-            }`}>
-              <div className="absolute top-0 right-0 w-3 h-3 bg-red-400 border-l border-b border-zinc-900" />
-              <div className="flex items-baseline justify-between">
-                <span className={`text-xs font-bold uppercase tracking-widest font-mono ${
-                  isDark ? 'text-zinc-400' : 'text-zinc-500'
-                }`}>
-                  SELECTED WORK //
-                </span>
-                <span className={`text-[10px] font-mono ${
-                  isDark ? 'text-zinc-500' : 'text-zinc-400'
-                }`}>
-                  N=03
-                </span>
-              </div>
-              <div className="space-y-3">
-                {selectedWork.map((item, i) => (
-                  <button
-                    key={i}
-                    onClick={() => onScrollToSection(item.target)}
-                    className={`group w-full text-left border-b-2 pb-3 last:border-0 last:pb-0 cursor-pointer transition-colors ${
-                      isDark ? 'border-zinc-800 hover:border-red-500' : 'border-zinc-100 hover:border-red-500'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className={`text-[10px] font-mono ${
-                          isDark ? 'text-zinc-500' : 'text-zinc-400'
-                        }`}>{item.idx}</span>
-                        <span className={`text-[10px] font-mono uppercase tracking-wider px-1.5 py-0.5 border ${
-                          isDark ? 'border-zinc-700 text-zinc-400' : 'border-zinc-300 text-zinc-500'
-                        }`}>{item.tag}</span>
-                      </div>
-                      <CornerRightDown className={`w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5 ${
-                        isDark ? 'text-zinc-500 group-hover:text-red-400' : 'text-zinc-400 group-hover:text-red-500'
-                      }`} />
-                    </div>
-                    <div className="flex justify-between items-baseline mt-1.5">
-                      <span className={`text-sm font-black tracking-tight ${
-                        isDark ? 'text-zinc-100' : 'text-zinc-900'
-                      }`}>{item.name}</span>
-                      <span className={`text-xl font-black ${
-                        item.metric === 'LIVE'
-                          ? 'text-red-500'
-                          : isDark ? 'text-zinc-100' : 'text-zinc-900'
-                      }`}>{item.metric}</span>
-                    </div>
-                    <span className={`text-[10px] font-mono mt-0.5 block ${
-                      isDark ? 'text-zinc-500' : 'text-zinc-500'
-                    }`}>{item.metricLabel}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
+          <div className="lg:col-span-5">
+            <TerminalStatus isDark={isDark} />
           </div>
 
         </div>
+
+        <ContactModal
+          show={showContactModal}
+          onClose={() => setShowContactModal(false)}
+          wechat={contactInfo.wechat}
+          email={contactInfo.email}
+          isDark={isDark}
+        />
       </section>
     );
   }
@@ -304,7 +239,7 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
           >
             <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-spin [animation-duration:6s]" />
             <span className={`text-xs font-mono font-medium tracking-wide transition-all duration-300 ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
-              刘昊然Turbo · 专注 AI 产品设计与独立开发
+              侯瑛琪Turbo · 专注 AI 产品设计与独立开发
             </span>
           </motion.div>
 
@@ -318,7 +253,7 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
                 isDark ? 'text-white' : 'text-zinc-950'
               }`}
             >
-              刘昊然Turbo
+              侯瑛琪Turbo
               <span className={`block text-2xl sm:text-3xl lg:text-4xl mt-3 font-semibold font-sans transition-colors duration-300 ${
                 isDark ? 'text-zinc-400' : 'text-zinc-500'
               }`}>

@@ -9,10 +9,12 @@ import Hero from './components/Hero';
 import CoreProjects from './components/CoreProjects';
 import ExplorationProjects from './components/ExplorationProjects';
 import Footer from './components/Footer';
-import { usePersistentState } from './hooks/usePersistentState';
-import { FileText, ArrowUp, Sparkles, BookOpen, LayoutGrid, Compass, Sun, Moon, X } from 'lucide-react';
+import { FileText, ArrowUp, Sun, Moon } from 'lucide-react';
 
 type VisualStyle = 'cyber' | 'editorial' | 'geometric';
+
+// 当前只保留「几何包豪斯」主题，cyber / editorial 分支代码暂时保留但不再被切到。
+const ACTIVE_STYLE: VisualStyle = 'geometric';
 
 const NAV_ITEMS: ReadonlyArray<{ id: string; label: string }> = [
   { id: 'hero-section', label: '专业画像' },
@@ -20,12 +22,6 @@ const NAV_ITEMS: ReadonlyArray<{ id: string; label: string }> = [
   { id: 'exploration-projects', label: '探索项目' },
   { id: 'continue-hear', label: '联系我' }
 ];
-
-const STYLES_SANDBOX_LIST = [
-  { id: 'cyber', label: '赛博极能', icon: Sparkles, color: 'text-cyan-400' },
-  { id: 'editorial', label: '人文社论', icon: BookOpen, color: 'text-amber-600' },
-  { id: 'geometric', label: '几何包豪斯', icon: Compass, color: 'text-red-500' }
-] as const;
 
 const getIsDarkForOpenTime = () => {
   const hour = new Date().getHours();
@@ -35,9 +31,8 @@ const getIsDarkForOpenTime = () => {
 export default function App() {
   const [activeSection, setActiveSection] = useState('hero-section');
   const [scrolled, setScrolled] = useState(false);
-  const [isSandboxOpen, setIsSandboxOpen] = useState(false);
-  const [activeStyle, setActiveStyle] = usePersistentState<VisualStyle>('portfolio-style', 'cyber');
   const [isDark, setIsDark] = useState<boolean>(getIsDarkForOpenTime);
+  const activeStyle = ACTIVE_STYLE;
 
   useEffect(() => {
     const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
@@ -90,7 +85,7 @@ export default function App() {
   };
 
   const handleDownloadCV = () => {
-    alert(`【简历已就绪】刘昊然Turbo_Resume_2026.pdf 已触发虚拟打包下载。
+    alert(`【简历已就绪】侯瑛琪Turbo_Resume_2026.pdf 已触发虚拟打包下载。
 
 在实际对接中，本按键直接指引向云存储空间极速同步下载全彩色、包含底层 Prompts 与 A/B Test 全量漏斗评估的精美 PDF 官方简历。`);
   };
@@ -232,7 +227,44 @@ export default function App() {
 
           {/* Quick CTA Download on right */}
           <div className="flex items-center space-x-3.5">
-            <button
+            {/* Dark / Light toggle (顶部直接切换，默认开屏时间逻辑保留) */}
+            <div
+              className={`flex items-center rounded-none p-0.5 border-2 ${
+                isDark ? 'bg-zinc-900 border-zinc-700' : 'bg-white border-zinc-900'
+              }`}
+              role="group"
+              aria-label="主题模式"
+            >
+              <button
+                type="button"
+                onClick={() => setIsDark(false)}
+                aria-pressed={!isDark}
+                title="切换为浅色模式"
+                className={`p-1.5 rounded-none transition-colors cursor-pointer ${
+                  !isDark
+                    ? 'bg-zinc-900 text-amber-400'
+                    : 'text-zinc-500 hover:text-zinc-300'
+                }`}
+              >
+                <Sun className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsDark(true)}
+                aria-pressed={isDark}
+                title="切换为深色模式"
+                className={`p-1.5 rounded-none transition-colors cursor-pointer ${
+                  isDark
+                    ? 'bg-zinc-100 text-zinc-900'
+                    : 'text-zinc-500 hover:text-zinc-700'
+                }`}
+              >
+                <Moon className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {/* 暂时隐藏顶部「下载简历」按钮，保留代码备用 */}
+            {/* <button
               onClick={handleDownloadCV}
               className={`py-1.5 px-3.5 text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shadow-sm ${
                 activeStyle === 'editorial'
@@ -250,144 +282,11 @@ export default function App() {
             >
               <FileText className="w-3.5 h-3.5" />
               <span>下载简历</span>
-            </button>
+            </button> */}
           </div>
 
         </div>
       </motion.header>
-
-      {/* STYLE SANDBOX FLOATING CONTROL PANEL */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
-        <AnimatePresence>
-          {isSandboxOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: 12, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 8, scale: 0.96 }}
-              transition={{ duration: 0.18, ease: 'easeOut' }}
-              className={`w-[min(calc(100vw-48px),420px)] p-3 border-2 rounded-2xl flex flex-col items-stretch gap-2 backdrop-blur-md ${
-                isDark
-                  ? 'bg-zinc-950/95 border-zinc-800/90 shadow-[0_15px_40px_rgba(0,0,0,0.8)]'
-                  : 'bg-white/95 border-zinc-200 shadow-[0_15px_40px_rgba(15,23,42,0.18)]'
-              }`}
-            >
-              <div className={`flex items-center justify-between gap-3 px-1 text-[10px] uppercase font-mono tracking-wider font-bold ${
-                isDark ? 'text-zinc-400' : 'text-zinc-500'
-              }`}>
-                <div className="flex items-center gap-1.5 min-w-0">
-                  <Sparkles className={`w-3.5 h-3.5 shrink-0 animate-spin [animation-duration:8s] ${
-                    isDark ? 'text-yellow-400' : 'text-amber-500'
-                  }`} />
-                  <span className="truncate">视觉设计风格对比沙盒 // Creative Sandbox</span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setIsSandboxOpen(false)}
-                  className={`p-1 rounded-lg transition-colors cursor-pointer ${
-                    isDark
-                      ? 'text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900'
-                      : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
-                  }`}
-                  aria-label="收起视觉风格沙盒"
-                  title="收起"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              </div>
-              
-              <div className="flex flex-col sm:flex-row sm:items-center gap-2 font-sans">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-1">
-                  {STYLES_SANDBOX_LIST.map((style) => {
-                    const isSelected = activeStyle === style.id;
-                    const IconComp = style.icon;
-
-                    return (
-                      <button
-                        key={style.id}
-                        onClick={() => {
-                          setActiveStyle(style.id);
-                        }}
-                        className={`flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer whitespace-nowrap ${
-                          isSelected 
-                            ? (isDark
-                                ? 'bg-zinc-800 text-white ring-2 ring-zinc-700 shadow-md'
-                                : 'bg-zinc-900 text-white ring-2 ring-zinc-300 shadow-md')
-                            : (isDark
-                                ? 'text-zinc-500 hover:text-zinc-400 hover:bg-zinc-900'
-                                : 'text-zinc-500 hover:text-zinc-700 hover:bg-zinc-100')
-                        }`}
-                      >
-                        <IconComp className={`w-3.5 h-3.5 ${style.color}`} />
-                        <span>{style.label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className={`hidden sm:block w-[1px] h-6 self-center mx-1 ${
-                  isDark ? 'bg-zinc-800' : 'bg-zinc-200'
-                }`} />
-
-                <div className={`flex items-center justify-center rounded-xl p-0.5 border ${
-                  isDark ? 'bg-zinc-900 border-zinc-800/80' : 'bg-zinc-100 border-zinc-200'
-                }`}>
-                  <button
-                    type="button"
-                    onClick={() => setIsDark(false)}
-                    aria-label="浅色模式"
-                    aria-pressed={!isDark}
-                    className={`p-1.5 rounded-lg transition-all cursor-pointer ${
-                      !isDark
-                        ? 'bg-white text-amber-500 shadow-sm ring-1 ring-zinc-200'
-                        : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800'
-                    }`}
-                    title="切换为浅色模式"
-                  >
-                    <Sun className="w-3.5 h-3.5" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setIsDark(true)}
-                    aria-label="深色模式"
-                    aria-pressed={isDark}
-                    className={`p-1.5 rounded-lg transition-all cursor-pointer ${
-                      isDark
-                        ? 'bg-zinc-700 text-cyan-300 shadow-sm'
-                        : 'text-zinc-500 hover:text-zinc-700 hover:bg-zinc-200'
-                    }`}
-                    title="切换为深色模式"
-                  >
-                    <Moon className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <button
-          type="button"
-          onClick={() => setIsSandboxOpen((current) => !current)}
-          aria-expanded={isSandboxOpen}
-          className={`flex items-center gap-2 px-3.5 py-2.5 rounded-2xl border-2 backdrop-blur-md transition-all cursor-pointer ${
-            isDark
-              ? `bg-zinc-950/95 shadow-[0_15px_40px_rgba(0,0,0,0.55)] ${
-                  isSandboxOpen
-                    ? 'border-zinc-700 text-zinc-200'
-                    : 'border-cyan-500/50 text-zinc-100 hover:border-cyan-400 hover:text-white'
-                }`
-              : `bg-white/95 shadow-[0_15px_40px_rgba(15,23,42,0.18)] ${
-                  isSandboxOpen
-                    ? 'border-zinc-300 text-zinc-700'
-                    : 'border-cyan-500/60 text-zinc-900 hover:border-cyan-500 hover:text-zinc-950'
-                }`
-          }`}
-          title={isSandboxOpen ? '收起视觉风格沙盒' : '展开视觉风格沙盒'}
-        >
-          <LayoutGrid className={`w-4 h-4 ${isDark ? 'text-cyan-300' : 'text-cyan-600'}`} />
-          <span className="text-xs font-bold">视觉风格</span>
-        </button>
-      </div>
 
       {/* MAIN LAYOUT */}
       <main className="pt-20">

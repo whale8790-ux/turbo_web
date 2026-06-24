@@ -38,7 +38,7 @@ export interface GeometricFooterProps {
 const MONO = 'font-mono uppercase tracking-[0.2em] text-[10px]';
 const Slash = () => <span className="text-red-500 mx-2">//</span>;
 
-function HeaderRow({ isDark }: { isDark: boolean }) {
+function HeaderRow() {
   return (
     <div className="flex flex-col sm:flex-row gap-6 sm:items-end justify-between">
       <div className="border-l-8 border-red-500 pl-4 text-left space-y-1 max-w-3xl">
@@ -47,19 +47,6 @@ function HeaderRow({ isDark }: { isDark: boolean }) {
           RESUME<Slash />GET IN TOUCH
         </p>
       </div>
-      <span
-        className={`inline-flex self-start sm:self-end items-center gap-3 px-4 py-2 border shrink-0 ${
-          isDark ? 'border-white/20' : 'border-zinc-400'
-        }`}
-      >
-        <span className="relative flex w-2 h-2" aria-hidden>
-          <span className="absolute inset-0 bg-emerald-400 animate-ping rounded-full" />
-          <span className="relative w-2 h-2 bg-emerald-400 rounded-full" />
-        </span>
-        <span className={`${MONO} ${isDark ? 'text-white' : 'text-zinc-900'}`}>
-          开放合作<Slash />OPEN TO WORK
-        </span>
-      </span>
     </div>
   );
 }
@@ -80,7 +67,7 @@ function MetaRow({ onScrollTop, isDark }: { onScrollTop: () => void; isDark: boo
         <ArrowUp className="w-3 h-3" />
         <span>回到首屏<Slash />BACK TO TOP</span>
       </button>
-      <span>© 2026 刘昊然Turbo</span>
+      <span>© 2026 侯瑛琪Turbo</span>
     </div>
   );
 }
@@ -111,15 +98,16 @@ function MainGrid({
   isDark,
 }: MainGridProps) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-10 items-stretch">
-      <div className="flex flex-col space-y-8">
+    <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-x-12 gap-y-10 items-center">
+      <div className="flex flex-col space-y-6">
         <p className="text-2xl sm:text-3xl font-bold leading-tight">
-          完整简历随时可取，
+          感谢读到这里，
           <br />
-          <span className="text-red-500">欢迎直接联系</span>。
+          <span className="text-red-500">欢迎与我聊聊</span>。
         </p>
-        <div className="flex flex-col sm:flex-row gap-3 mt-auto">
-          <button
+        <div className="flex flex-col sm:flex-row gap-3">
+          {/* 暂时隐藏「下载简历」按钮，保留代码备用 */}
+          {/* <button
             id="btn-download-cv"
             onClick={onDownload}
             disabled={isDownloading}
@@ -152,13 +140,13 @@ function MainGrid({
                 </>
               )}
             </span>
-          </button>
+          </button> */}
           <a
             href={`mailto:${contactInfo.email}`}
-            className={`flex-1 px-6 py-4 border font-bold text-sm flex items-center justify-center gap-2 transition-colors cursor-pointer ${
+            className={`self-start inline-flex items-center justify-center gap-2 px-7 py-4 font-bold text-sm transition-colors cursor-pointer ${
               isDark
-                ? 'border-white/30 text-white hover:bg-white hover:text-black'
-                : 'border-zinc-400 text-zinc-900 hover:bg-zinc-900 hover:text-white'
+                ? 'bg-white text-black hover:bg-zinc-200'
+                : 'bg-zinc-900 text-white hover:bg-zinc-800'
             }`}
           >
             <Mail className="w-4 h-4" />
@@ -451,7 +439,7 @@ export default function GeometricFooter({
       className={`relative transition-colors duration-300 ${rootClass}`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20 space-y-12">
-        <HeaderRow isDark={isDark} />
+        <HeaderRow />
         <div className={`border-t ${divider}`} />
         <MainGrid
           contactInfo={contactInfo}

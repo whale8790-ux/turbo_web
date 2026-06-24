@@ -44,27 +44,11 @@ export const CORE_PROJECTS: CoreProject[] = [
 
 export const EXPLORATION_PROJECTS: ExplorationProject[] = [
   {
-    id: 'job-agent',
-    name: '求职 Agent',
-    tagline: '基于求职偏好搜集岗位，提供岗位匹配分析与面试准备建议。',
-    status: '已有 Demo / 持续迭代中',
-    highlights: [
-      '岗位主动搜集：智能遍历相关求职方向岗位信息',
-      '岗位匹配度深度剖析：比对岗位JD与个人能力项',
-      '简历针对性修改建议：挖掘并贴近岗位的闪光点',
-      '模拟面试问题生成：针对该岗位生成5个最可能问的专业题'
-    ],
-    tags: ['Agent', '岗位匹配', '面试准备'],
-    hasDemo: true,
-    linkType: 'demo'
-  },
-  {
     id: 'learn-page',
     name: '在线学习页面',
     tagline: '围绕 Agent 知识学习设计的可交互学习流程页面，展示学习流程、内容结构和交互体验设计能力。',
-    status: '已有页面 / 可跳转',
+    status: '已上线',
     highlights: [
-      '学习目标自定义：基于当前求学意向进行课程初始化',
       '多层级学习路径拆解：动态解构章节学习节点与章节测试',
       '内容任务卡驱动：通过行动导向型任务，让学习不再枯燥',
       '互动式阶段测试：多维度多场景测评用户并输出反馈报告'
@@ -74,17 +58,31 @@ export const EXPLORATION_PROJECTS: ExplorationProject[] = [
     linkType: 'page'
   },
   {
-    id: 'fitness-tracker',
-    name: '健身应用',
-    tagline: '围绕健身记录与成长体系，帮助用户看见坚持，并逐步形成长期训练反馈。',
+    id: 'job-agent',
+    name: '求职 Agent',
+    tagline: '基于求职偏好搜集岗位，提供岗位匹配分析与面试准备建议。',
+    status: '迭代中',
+    highlights: [
+      '岗位主动搜集：智能遍历相关求职方向岗位信息',
+      '岗位匹配度深度剖析：比对岗位JD与个人能力项',
+      '简历针对性修改建议：挖掘并贴近岗位的闪光点'
+    ],
+    tags: ['Agent', '岗位匹配', '面试准备'],
+    hasDemo: true,
+    linkType: 'demo'
+  },
+  {
+    id: 'ai-quota-monitor',
+    name: 'AI 额度监控',
+    tagline: '统一跟踪各家 AI 服务的额度与计费周期，主动提醒并沉淀历史记录，iOS / macOS 双端同步。',
     status: '制作中',
     highlights: [
-      '智能化训练计划：让初学者快速搭建属于自己的健身模板',
-      '多维训练数据洞察：从频次、容量、肌群覆盖等切入记录',
-      '个人成就勋章体系：高频里程碑反馈，增加情绪耐力',
-      '健身社交分享设计：可分享高质感打卡卡片促进裂变'
+      '多厂商额度配置：自定义各家 AI 服务的额度上限与循环周期',
+      '用量进度可视化：实时呈现剩余额度与周期重置节点',
+      '阈值智能提醒：接近上限或周期切换时主动推送提示',
+      '跨端同步：iOS / macOS 双端记录与查看，规划更顺手'
     ],
-    tags: ['健身记录', '成长体系', '数据反馈'],
+    tags: ['额度监控', '多厂商', 'iOS / macOS'],
     hasDemo: false,
     linkType: 'none'
   }

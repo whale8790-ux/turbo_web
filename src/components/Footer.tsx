@@ -353,7 +353,7 @@ export default function Footer({ activeStyle = 'cyber', isDark = true }: FooterP
             <ArrowUp className="w-3.5 h-3.5" />
             <span>回到首屏</span>
           </button>
-          <span>© 2026 刘昊然Turbo</span>
+          <span>© 2026 侯瑛琪Turbo</span>
         </div>
       </div>
 
