@@ -4,7 +4,7 @@
  */
 
 import { motion } from 'motion/react';
-import { Sparkles, FileText, ArrowRight, Layers, Target, Compass, CornerRightDown, BookOpen, Layers3, Activity } from 'lucide-react';
+import { Sparkles, FileText, ArrowRight, Layers, Target, Compass, CornerRightDown, Layers3, Activity } from 'lucide-react';
 
 interface HeroProps {
   onScrollToSection: (id: string) => void;
@@ -34,18 +34,6 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
         <div className={`absolute top-0 right-0 w-1/3 h-full -skew-x-12 pointer-events-none transition-all duration-300 ${isDark ? 'bg-[#3e3425]/10' : 'bg-[#f4ebd9]/20'}`} />
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center relative z-10">
           
-          {/* Elegant Crest Tag */}
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className={`inline-flex items-center space-x-2 border-b pb-2 mb-8 font-sans transition-all duration-300 ${isDark ? 'border-stone-700 text-stone-300' : 'border-stone-300 text-stone-600'}`}
-          >
-            <BookOpen className={`w-3.5 h-3.5 ${isDark ? 'text-stone-400' : 'text-stone-600'}`} />
-            <span className={`text-xs font-mono tracking-widest uppercase ${isDark ? 'text-stone-400' : 'text-stone-600'}`}>
-              PORTFOLIO EDITION • TURBO LIU
-            </span>
-          </motion.div>
-
           {/* Master Literary Heading */}
           <div className="space-y-6">
             <motion.h1 
@@ -94,7 +82,7 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
                   : 'border-stone-800 text-stone-900 bg-transparent hover:bg-stone-900 hover:text-[#faf8f4]'
               }`}
             >
-              查看核心项目拆解 →
+              查看项目 →
             </button>
             <button
               onClick={() => onScrollToSection('continue-hear')}
@@ -104,7 +92,7 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
                   : 'border-stone-400 text-stone-700 hover:text-stone-900 hover:border-stone-900'
               }`}
             >
-              简历与联系
+              下载简历
             </button>
           </motion.div>
 
@@ -134,6 +122,33 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
   // 3. GEOMETRIC BALANCE STYLE
   // ==========================
   if (activeStyle === 'geometric') {
+    // Selected Work · 首屏战绩 + 锚点跳转 (方案 1+2 混合)
+    const selectedWork = [
+      {
+        idx: '01',
+        name: 'AI 聊天助手',
+        metric: '+17pp',
+        metricLabel: '双向会话渗透率',
+        target: 'core-projects',
+        tag: 'AI AGENT',
+      },
+      {
+        idx: '02',
+        name: 'AIGC 人像生成',
+        metric: '+20pp',
+        metricLabel: '生成结果保存率',
+        target: 'core-projects',
+        tag: 'AIGC',
+      },
+      {
+        idx: '03',
+        name: '求职 Agent',
+        metric: 'LIVE',
+        metricLabel: '可交互 Demo',
+        target: 'exploration-projects',
+        tag: 'EXPLORE',
+      },
+    ];
     return (
       <section id="hero-section" className={`relative pt-24 pb-16 lg:pt-32 lg:pb-24 overflow-hidden transition-colors duration-300 border-b-2 ${
         isDark ? 'bg-[#09090b] text-zinc-100 border-zinc-800' : 'bg-[#efeff4] text-zinc-900 border-zinc-900'
@@ -159,8 +174,8 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
 
             <h1 className="text-4xl sm:text-6xl font-black uppercase tracking-tighter leading-none">
               刘昊然 TURBO
-              <span className="block text-xl sm:text-2xl tracking-normal font-bold text-red-600 mt-2 lowercase text-left">
-                [ AI产品经理 ｜ 独立开发者 ]
+              <span className="block text-xl sm:text-2xl tracking-normal font-bold text-red-600 mt-2 normal-case text-left">
+                [ AI 产品经理 ｜ 独立开发者 ]
               </span>
             </h1>
 
@@ -179,7 +194,7 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
                     : 'bg-zinc-900 hover:bg-zinc-800 text-white border-zinc-900'
                 }`}
               >
-                检阅主导项目 / DEPLOYED PROJECTS
+                查看项目 / DEPLOYED PROJECTS
               </button>
               <button
                 onClick={() => onScrollToSection('continue-hear')}
@@ -200,26 +215,54 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
               isDark ? 'bg-zinc-900 border-zinc-700' : 'bg-white border-zinc-900'
             }`}>
               <div className="absolute top-0 right-0 w-3 h-3 bg-red-400 border-l border-b border-zinc-900" />
-              <span className={`text-xs font-bold uppercase tracking-widest font-mono ${
-                isDark ? 'text-zinc-400' : 'text-zinc-500'
-              }`}>
-                METRIC MATRIX //
-              </span>
-              <div className="space-y-4">
-                {heroMetrics.map((met, i) => (
-                  <div key={i} className={`border-b-2 pb-2 last:border-0 last:pb-0 ${
-                    isDark ? 'border-zinc-800' : 'border-zinc-100'
-                  }`}>
-                    <span className={`text-[11px] block font-bold font-sans uppercase ${
-                      isDark ? 'text-zinc-400' : 'text-zinc-500'
-                    }`}>{met.label}</span>
-                    <div className="flex justify-between items-baseline mt-1">
-                      <span className="text-zinc-500 text-[10px] font-mono">{met.highlight}</span>
-                      <span className={`text-2xl font-black ${
-                        isDark ? 'text-zinc-100' : 'text-zinc-900'
-                      }`}>{met.value}</span>
+              <div className="flex items-baseline justify-between">
+                <span className={`text-xs font-bold uppercase tracking-widest font-mono ${
+                  isDark ? 'text-zinc-400' : 'text-zinc-500'
+                }`}>
+                  SELECTED WORK //
+                </span>
+                <span className={`text-[10px] font-mono ${
+                  isDark ? 'text-zinc-500' : 'text-zinc-400'
+                }`}>
+                  N=03
+                </span>
+              </div>
+              <div className="space-y-3">
+                {selectedWork.map((item, i) => (
+                  <button
+                    key={i}
+                    onClick={() => onScrollToSection(item.target)}
+                    className={`group w-full text-left border-b-2 pb-3 last:border-0 last:pb-0 cursor-pointer transition-colors ${
+                      isDark ? 'border-zinc-800 hover:border-red-500' : 'border-zinc-100 hover:border-red-500'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className={`text-[10px] font-mono ${
+                          isDark ? 'text-zinc-500' : 'text-zinc-400'
+                        }`}>{item.idx}</span>
+                        <span className={`text-[10px] font-mono uppercase tracking-wider px-1.5 py-0.5 border ${
+                          isDark ? 'border-zinc-700 text-zinc-400' : 'border-zinc-300 text-zinc-500'
+                        }`}>{item.tag}</span>
+                      </div>
+                      <CornerRightDown className={`w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5 ${
+                        isDark ? 'text-zinc-500 group-hover:text-red-400' : 'text-zinc-400 group-hover:text-red-500'
+                      }`} />
                     </div>
-                  </div>
+                    <div className="flex justify-between items-baseline mt-1.5">
+                      <span className={`text-sm font-black tracking-tight ${
+                        isDark ? 'text-zinc-100' : 'text-zinc-900'
+                      }`}>{item.name}</span>
+                      <span className={`text-xl font-black ${
+                        item.metric === 'LIVE'
+                          ? 'text-red-500'
+                          : isDark ? 'text-zinc-100' : 'text-zinc-900'
+                      }`}>{item.metric}</span>
+                    </div>
+                    <span className={`text-[10px] font-mono mt-0.5 block ${
+                      isDark ? 'text-zinc-500' : 'text-zinc-500'
+                    }`}>{item.metricLabel}</span>
+                  </button>
                 ))}
               </div>
             </div>
@@ -236,11 +279,12 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
   return (
     <section id="hero-section" className="relative min-h-[90vh] flex flex-col justify-center py-16 lg:py-24 overflow-hidden">
       {/* Dynamic atmospheric light spots */}
-      <div className={`absolute top-1/4 left-1/10 w-96 h-96 rounded-full filter blur-[120px] pointer-events-none animate-pulse-subtle ${isDark ? 'bg-cyan-500/10' : 'bg-cyan-500/5'}`} />
-      <div className={`absolute top-1/3 right-1/10 w-[450px] h-[450px] rounded-full filter blur-[150px] pointer-events-none ${isDark ? 'bg-violet-600/5' : 'bg-violet-500/2'}`} />
+      <div className={`absolute top-1/4 left-1/10 w-96 h-96 rounded-full filter blur-[120px] pointer-events-none animate-pulse-subtle ${isDark ? 'bg-cyan-500/10' : 'bg-cyan-400/25'}`} />
+      <div className={`absolute top-1/3 right-1/10 w-[450px] h-[450px] rounded-full filter blur-[150px] pointer-events-none ${isDark ? 'bg-violet-600/5' : 'bg-violet-400/20'}`} />
+      <div className={`absolute bottom-[8%] left-1/4 w-[420px] h-[420px] rounded-full filter blur-[140px] pointer-events-none ${isDark ? 'bg-violet-600/5' : 'bg-sky-400/15'}`} />
 
       {/* Grid Pattern mask overlay */}
-      <div className={`absolute inset-0 tech-grid-bg pointer-events-none transition-all duration-300 ${isDark ? 'opacity-30' : 'opacity-[0.06]'}`} />
+      <div className={`absolute inset-0 tech-grid-bg pointer-events-none transition-all duration-300 ${isDark ? 'opacity-30' : 'opacity-[0.12]'}`} />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
         
@@ -314,7 +358,7 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
               onClick={() => onScrollToSection('core-projects')}
               className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-violet-600 hover:from-cyan-400 hover:to-violet-500 font-bold text-white text-sm shadow-xl shadow-cyan-500/10 transition-all duration-300 flex items-center space-x-2 group cursor-pointer"
             >
-              <span>查看主导项目</span>
+              <span>查看项目</span>
               <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" />
             </button>
             
@@ -327,7 +371,7 @@ export default function Hero({ onScrollToSection, activeStyle = 'cyber', isDark 
               }`}
             >
               <FileText className="w-4 h-4 text-zinc-500" />
-              <span>下载简历 & 取得联系</span>
+              <span>下载简历</span>
             </button>
           </motion.div>
         </div>

@@ -13,9 +13,8 @@ import {
   RotateCcw, 
   Smartphone, 
   User, 
-  ChevronRight, 
-  Upload, 
-  Check, 
+  ChevronRight,
+  Check,
   Clock, 
   TrendingUp, 
   Zap, 
@@ -719,10 +718,10 @@ export default function InteractiveDemo({ initialApp = 'chat', activeStyle = 'cy
                           className="absolute inset-y-0 left-0 overflow-hidden"
                           style={{ width: `${comparisonSwipe}%` }}
                         >
-                          <img 
-                            src={ORIGINAL_PORTRAITS.find(p => p.id === selectedPortrait)?.avatar || ''} 
-                            alt="Original" 
-                            className="absolute top-0 left-0 w-[288px] h-[288px] max-w-none object-cover" 
+                          <img
+                            src={ORIGINAL_PORTRAITS.find(p => p.id === selectedPortrait)?.avatar || ''}
+                            alt="Original"
+                            className="absolute top-0 left-0 h-full w-auto max-w-none aspect-square object-cover"
                             referrerPolicy="no-referrer"
                           />
                           <div className="absolute top-2 left-2 bg-black/70 text-zinc-300 font-mono text-[7px] px-1.5 py-0.5 rounded">原始照片</div>
@@ -755,28 +754,8 @@ export default function InteractiveDemo({ initialApp = 'chat', activeStyle = 'cy
                         </div>
                       </div>
 
-                      {/* Styled Info Metrics */}
-                      <div className={`p-2.5 rounded-xl border font-mono text-[8px] flex justify-between transition-colors duration-300 ${
-                        isDark ? 'bg-zinc-900 border-zinc-800 text-zinc-400' : 'bg-white border-slate-200 text-slate-600 shadow-xs'
-                      }`}>
-                        <div>
-                          <span className="block text-zinc-500 text-[6px]">推理耗时</span>
-                          <span className="text-emerald-500 font-bold text-[10px]">1.8s</span>
-                        </div>
-                        <div className={`border-r ${isDark ? 'border-zinc-800' : 'border-slate-205'}`} />
-                        <div>
-                          <span className="block text-zinc-500 text-[6px]">单图保存率</span>
-                          <span className="text-violet-500 font-semibold text-[10px]">+20PP 🎉</span>
-                        </div>
-                        <div className={`border-r ${isDark ? 'border-zinc-800' : 'border-slate-205'}`} />
-                        <div>
-                          <span className="block text-zinc-500 text-[6px]">模型规格</span>
-                          <span className={`text-[10px] ${isDark ? 'text-zinc-300' : 'text-slate-800'}`}>SDXL_Base_v1.0</span>
-                        </div>
-                      </div>
-
                       {/* Action buttons */}
-                      <div className="grid grid-cols-2 gap-2 mt-1">
+                      <div className="grid grid-cols-1 gap-2 mt-1">
                         <button
                           onClick={handleResetPortrait}
                           className={
@@ -797,27 +776,6 @@ export default function InteractiveDemo({ initialApp = 'chat', activeStyle = 'cy
                         >
                           <RotateCcw className="w-3 h-3" />
                           <span>换张照片/风格</span>
-                        </button>
-                        <button
-                          onClick={() => alert('已模拟保存成功！在真实系统中，该行为会同步触发图片下载并累积到“推荐采纳大盘”，用于后续的模型强化微调迭代数据闭环。')}
-                          className={
-                            isEditorial
-                              ? `py-2 text-[9px] font-medium flex items-center justify-center space-x-1 font-serif transition-colors ${
-                                  isDark ? 'bg-stone-200 text-[#1a1816] hover:bg-stone-300' : 'bg-stone-900 text-stone-100 hover:bg-stone-800'
-                                }`
-                              : isGeometric
-                              ? `py-2 text-[9px] font-black uppercase tracking-wider flex items-center justify-center space-x-1 transition-colors ${
-                                  isDark ? 'bg-zinc-100 text-zinc-950 hover:bg-red-500 hover:text-white' : 'bg-zinc-900 text-white hover:bg-red-500'
-                                }`
-                              : `py-2 rounded-xl text-[9px] font-bold flex items-center justify-center space-x-1 transition-all ${
-                                  isDark 
-                                    ? 'bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow shadow-violet-500/10 hover:brightness-110' 
-                                    : 'bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white shadow hover:brightness-105'
-                                }`
-                          }
-                        >
-                          <Upload className="w-3 h-3" />
-                          <span>保存并分享图片</span>
                         </button>
                       </div>
                     </div>

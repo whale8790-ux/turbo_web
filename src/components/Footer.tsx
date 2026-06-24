@@ -6,6 +6,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import {
+  ArrowRight,
   ArrowUp,
   Check,
   Clock,
@@ -17,6 +18,9 @@ import {
   Sparkles,
   X,
 } from 'lucide-react';
+import GeometricFooter from './footer/GeometricFooter';
+import CyberFooter from './footer/CyberFooter';
+import EditorialFooter from './footer/EditorialFooter';
 
 interface FooterProps {
   onScrollToSection: (id: string) => void;
@@ -25,31 +29,14 @@ interface FooterProps {
 }
 
 const QrCodeSvg = ({ className = 'w-full h-full' }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 100 100" aria-label="微信二维码">
-    <rect x="0" y="0" width="25" height="25" fill="currentColor" />
-    <rect x="4" y="4" width="17" height="17" fill="white" />
-    <rect x="8" y="8" width="9" height="9" fill="currentColor" />
-    <rect x="75" y="0" width="25" height="25" fill="currentColor" />
-    <rect x="79" y="4" width="17" height="17" fill="white" />
-    <rect x="83" y="8" width="9" height="9" fill="currentColor" />
-    <rect x="0" y="75" width="25" height="25" fill="currentColor" />
-    <rect x="4" y="79" width="17" height="17" fill="white" />
-    <rect x="8" y="83" width="9" height="9" fill="currentColor" />
-    <rect x="35" y="5" width="6" height="6" fill="currentColor" />
-    <rect x="50" y="5" width="8" height="6" fill="currentColor" />
-    <rect x="62" y="10" width="6" height="12" fill="currentColor" />
-    <rect x="35" y="20" width="12" height="6" fill="currentColor" />
-    <rect x="15" y="35" width="6" height="18" fill="currentColor" />
-    <rect x="5" y="60" width="12" height="6" fill="currentColor" />
-    <rect x="30" y="30" width="40" height="40" fill="transparent" stroke="currentColor" strokeWidth="4" />
-    <rect x="45" y="45" width="10" height="10" fill="currentColor" />
-    <rect x="38" y="52" width="6" height="6" fill="currentColor" />
-    <rect x="56" y="38" width="6" height="6" fill="currentColor" />
-    <rect x="75" y="75" width="6" height="6" fill="currentColor" />
-    <rect x="85" y="75" width="10" height="6" fill="currentColor" />
-    <rect x="75" y="85" width="6" height="10" fill="currentColor" />
-    <rect x="85" y="85" width="6" height="6" fill="currentColor" />
-  </svg>
+  <img
+    src="/wechat-qr.jpg"
+    alt="微信二维码 - 添加好友"
+    aria-label="微信二维码"
+    loading="lazy"
+    decoding="async"
+    className={`${className} object-contain bg-white`}
+  />
 );
 
 export default function Footer({ activeStyle = 'cyber', isDark = true }: FooterProps) {
@@ -74,10 +61,10 @@ export default function Footer({ activeStyle = 'cyber', isDark = true }: FooterP
   }, []);
 
   const contactInfo = {
-    email: 'whale.4655@gmail.com',
+    email: 'turbo707@icloud.com',
     github: 'https://github.com/whale8790-ux',
     githubLabel: 'whale8790-ux',
-    wechat: 'Turbo_HaoRan',
+    wechat: 'turboss7',
   };
 
   const showToast = (msg: string) => {
@@ -192,6 +179,69 @@ export default function Footer({ activeStyle = 'cyber', isDark = true }: FooterP
       ? 'text-zinc-400 hover:text-white border-zinc-800 bg-zinc-950/60'
       : 'text-zinc-500 hover:text-zinc-900 border-zinc-300 bg-white'
   }`;
+
+  if (isGeometric) {
+    return (
+      <GeometricFooter
+        contactInfo={contactInfo}
+        copiedText={copiedText}
+        downloadProgress={downloadProgress}
+        downloadSuccess={downloadSuccess}
+        showQrModal={showQrModal}
+        toastMessage={toastMessage}
+        onCopy={handleCopy}
+        onDownload={startRealDownload}
+        onOpenQr={() => setShowQrModal(true)}
+        onCloseQr={() => setShowQrModal(false)}
+        onDismissToast={() => setToastMessage(null)}
+        onScrollTop={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        QrCodeSvg={QrCodeSvg}
+        isDark={isDark}
+      />
+    );
+  }
+
+  if (activeStyle === 'cyber') {
+    return (
+      <CyberFooter
+        contactInfo={contactInfo}
+        copiedText={copiedText}
+        downloadProgress={downloadProgress}
+        downloadSuccess={downloadSuccess}
+        showQrModal={showQrModal}
+        toastMessage={toastMessage}
+        onCopy={handleCopy}
+        onDownload={startRealDownload}
+        onOpenQr={() => setShowQrModal(true)}
+        onCloseQr={() => setShowQrModal(false)}
+        onDismissToast={() => setToastMessage(null)}
+        onScrollTop={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        QrCodeSvg={QrCodeSvg}
+        isDark={isDark}
+      />
+    );
+  }
+
+  if (isEditorial) {
+    return (
+      <EditorialFooter
+        contactInfo={contactInfo}
+        copiedText={copiedText}
+        downloadProgress={downloadProgress}
+        downloadSuccess={downloadSuccess}
+        showQrModal={showQrModal}
+        toastMessage={toastMessage}
+        onCopy={handleCopy}
+        onDownload={startRealDownload}
+        onOpenQr={() => setShowQrModal(true)}
+        onCloseQr={() => setShowQrModal(false)}
+        onDismissToast={() => setToastMessage(null)}
+        onScrollTop={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        QrCodeSvg={QrCodeSvg}
+        isDark={isDark}
+      />
+    );
+  }
 
   return (
     <footer id="continue-hear" className={`relative py-20 border-t transition-colors duration-300 ${footerClass}`}>

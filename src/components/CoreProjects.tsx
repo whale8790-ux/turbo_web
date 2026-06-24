@@ -36,10 +36,10 @@ export default function CoreProjects({ onScrollToSection, activeStyle = 'cyber',
           {/* Module Header */}
           <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
             <h2 className={`text-3xl sm:text-4xl font-serif tracking-tight transition-colors duration-300 ${isDark ? 'text-stone-100' : 'text-stone-900'}`}>
-              核心项目介绍
+              核心项目
             </h2>
             <p className={`text-sm font-serif italic transition-colors duration-300 ${isDark ? 'text-stone-300' : 'text-stone-600'}`}>
-              “以科学态度探索人机协同界面，实现大模型核心技术深度商业化封包”
+              我主导负责的核心 AI 项目，均配有可交互 Demo 演示。点选下方控制台卡片，即可查看对应项目。
             </p>
           </div>
 
@@ -185,10 +185,10 @@ export default function CoreProjects({ onScrollToSection, activeStyle = 'cyber',
               CASE ARCHITECTURE // DATA DRIVEN PM
             </span>
             <h2 className={`text-3xl font-black uppercase tracking-tighter ${isDark ? 'text-zinc-100' : 'text-zinc-900'}`}>
-              核心落地项目及指标
+              核心项目
             </h2>
             <p className={`text-xs font-sans font-medium ${isDark ? 'text-zinc-400' : 'text-zinc-600'}`}>
-              摒弃空谈，用硬派工业技术与数据归因支撑商业变现。
+              我主导负责的核心 AI 项目，均配有可交互 Demo 演示。点选下方控制台卡片，即可查看对应项目。
             </p>
           </div>
 
@@ -228,7 +228,7 @@ export default function CoreProjects({ onScrollToSection, activeStyle = 'cyber',
               <div className={`lg:col-span-6 p-6 sm:p-8 md:p-10 space-y-6 flex flex-col justify-between transition duration-200 relative ${
                 isDark ? 'bg-zinc-900 hover:bg-zinc-800' : 'bg-[#efeff4] hover:bg-white'
               }`}>
-                <div className="absolute top-0 right-0 py-1 px-3 bg-[#e11d48] text-white font-mono text-[10px] font-bold">
+                <div className="absolute top-0 left-0 py-1 px-3 bg-[#e11d48] text-white font-mono text-[10px] font-bold">
                   0{activeProjectIdx + 1}
                 </div>
 
@@ -265,16 +265,16 @@ export default function CoreProjects({ onScrollToSection, activeStyle = 'cyber',
                   </div>
 
                   {/* Metrics */}
-                  <div className={`pt-2 border-t transition-colors duration-300 ${isDark ? 'border-zinc-800' : 'border-zinc-200'}`}>
-                    <span className="text-[9px] font-mono font-black text-zinc-400 uppercase block mb-2">METRIC VERIFICATIONS //</span>
-                    <div className="grid grid-cols-3 gap-2">
+                  <div className={`pt-3 border-t transition-colors duration-300 ${isDark ? 'border-zinc-800' : 'border-zinc-200'}`}>
+                    <span className="text-[10px] font-mono font-black text-zinc-400 uppercase block mb-3 tracking-wider">METRIC VERIFICATIONS //</span>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       {proj.results.map((res, i) => (
-                        <div key={i} className={`border p-2 text-center transition-colors duration-300 ${
-                          isDark ? 'bg-zinc-950 border-zinc-800 hover:border-zinc-700' : 'bg-white border-zinc-200 hover:border-zinc-900'
+                        <div key={i} className={`border p-3 sm:p-4 transition-colors duration-300 ${
+                          isDark ? 'bg-zinc-950 border-zinc-800 hover:border-zinc-600' : 'bg-white border-zinc-200 hover:border-zinc-900'
                         }`}>
-                          <span className="text-[8px] text-zinc-400 uppercase block font-bold truncate">{res.label}</span>
-                          <span className={`text-xs sm:text-sm font-black block font-mono mt-1 ${isDark ? 'text-zinc-100' : 'text-zinc-900'}`}>{res.value}</span>
-                          <span className="text-[7.5px] text-red-600 font-bold block">{res.desc}</span>
+                          <span className={`text-[10px] uppercase block font-bold tracking-wider ${isDark ? 'text-zinc-400' : 'text-zinc-500'}`}>{res.label}</span>
+                          <span className={`text-lg sm:text-xl font-black block font-mono mt-1.5 leading-tight ${isDark ? 'text-zinc-100' : 'text-zinc-900'}`}>{res.value}</span>
+                          <span className="text-[11px] text-red-600 font-semibold block mt-1 leading-snug">{res.desc}</span>
                         </div>
                       ))}
                     </div>
@@ -339,10 +339,10 @@ export default function CoreProjects({ onScrollToSection, activeStyle = 'cyber',
             精选落地成果 & 演示
           </span>
           <h2 className={`text-3xl sm:text-4xl font-extrabold font-display tracking-tight transition-colors duration-300 ${isDark ? 'text-white' : 'text-zinc-900'}`}>
-            核心项目一站式体验
+            核心项目
           </h2>
           <p className={`text-xs sm:text-sm leading-relaxed transition-colors duration-300 ${isDark ? 'text-zinc-400' : 'text-zinc-700'}`}>
-            项目哲学描述与实机 Demo 演示完美合并。点选下方控制台卡片，即可激活查看对应项。
+            我主导负责的核心 AI 项目，均配有可交互 Demo 演示。点选下方控制台卡片，即可查看对应项目。
           </p>
         </div>
 
@@ -493,14 +493,12 @@ export default function CoreProjects({ onScrollToSection, activeStyle = 'cyber',
                   </p>
                 </div>
 
-                {/* Interactive prompt block */}
-                <div className={`border rounded-2xl p-3 flex items-center space-x-2.5 text-[10px] leading-normal transition-colors duration-300 ${
-                  isDark 
-                    ? 'bg-[#12131a] border-cyan-500/10 text-zinc-400' 
-                    : 'bg-cyan-50/40 border-cyan-500/20 text-zinc-600'
+                {/* Interactive prompt — editorial-referenced cue */}
+                <div className={`mt-1 text-[11px] italic leading-relaxed flex items-center space-x-2 transition-colors duration-300 ${
+                  isDark ? 'text-zinc-400' : 'text-zinc-500'
                 }`}>
-                  <div className={`w-2 h-2 rounded-full animate-ping ${isChat ? 'bg-cyan-500 shadow-[0_0_8px_#22d3ee]' : 'bg-violet-500 shadow-[0_0_8px_#a78bfa]'}`} />
-                  <span>右侧已为您装载 <b>{proj.name}</b> 的高分辨率验证原型，欢迎动手体验！</span>
+                  <span className={isChat ? 'text-cyan-500' : 'text-violet-500'}>✎</span>
+                  <span>{isChat ? '点击右侧候选话术，体验 AI 辅助回复流程' : '点击右侧生成按钮，体验人像风格化流程'}</span>
                 </div>
               </div>
             </div>

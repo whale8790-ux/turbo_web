@@ -109,7 +109,13 @@ export default function ExplorationProjects({ activeStyle = 'cyber', isDark = tr
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         
         {/* Module Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-2">
+        <div
+          className={`mb-16 space-y-2 ${
+            activeStyle === 'geometric'
+              ? 'text-left max-w-3xl'
+              : 'text-center max-w-3xl mx-auto'
+          }`}
+        >
           {activeStyle === 'editorial' ? (
             <>
               <h2 className={`text-3xl sm:text-4xl font-serif transition-colors duration-300 ${isDark ? 'text-stone-100' : 'text-stone-900'}`}>探索项目</h2>
@@ -118,7 +124,7 @@ export default function ExplorationProjects({ activeStyle = 'cyber', isDark = tr
           ) : activeStyle === 'geometric' ? (
             <div className={`border-l-8 pl-4 text-left transition-colors duration-300 space-y-1 ${isDark ? 'border-zinc-700' : 'border-red-500'}`}>
               <span className={`text-xs font-mono font-bold block pb-1.5 tracking-widest uppercase transition-colors duration-300 ${isDark ? 'text-zinc-500' : 'text-zinc-400'}`}>EXPERIMENTAL BLUEPRINTS //</span>
-              <h2 className={`text-3xl font-black uppercase tracking-tighter transition-colors duration-300 ${isDark ? 'text-zinc-100' : 'text-zinc-900'}`}>探索项目栏</h2>
+              <h2 className={`text-3xl font-black uppercase tracking-tighter transition-colors duration-300 ${isDark ? 'text-zinc-100' : 'text-zinc-900'}`}>探索项目</h2>
               <p className={`text-xs mt-1 transition-colors duration-300 ${isDark ? 'text-zinc-400' : 'text-zinc-500'}`}>独立建立的敏捷原件验证场，验证产品在新赛道中的承载模型优势。</p>
             </div>
           ) : (
@@ -279,7 +285,17 @@ export default function ExplorationProjects({ activeStyle = 'cyber', isDark = tr
                   </div>
 
                   {/* Play Prototype Button */}
-                  {proj.hasDemo && overlayKey ? (
+                  {proj.hasDemo && proj.id === 'learn-page' ? (
+                    <a
+                      href="https://cc-study-6hc.pages.dev"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={ctaClass}
+                    >
+                      <span>查看 Demo</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </a>
+                  ) : proj.hasDemo && overlayKey ? (
                     <button
                       onClick={() => setActiveOverlay(overlayKey)}
                       className={ctaClass}

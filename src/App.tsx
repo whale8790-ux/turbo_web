@@ -16,9 +16,9 @@ type VisualStyle = 'cyber' | 'editorial' | 'geometric';
 
 const NAV_ITEMS: ReadonlyArray<{ id: string; label: string }> = [
   { id: 'hero-section', label: '专业画像' },
-  { id: 'core-projects', label: '核心实战' },
-  { id: 'exploration-projects', label: '前沿探索' },
-  { id: 'continue-hear', label: '简历与建联' }
+  { id: 'core-projects', label: '核心项目' },
+  { id: 'exploration-projects', label: '探索项目' },
+  { id: 'continue-hear', label: '联系我' }
 ];
 
 const STYLES_SANDBOX_LIST = [
@@ -155,15 +155,13 @@ export default function App() {
           {/* Logo & Online state dot */}
           <div className="flex items-center space-x-3 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <div className="relative">
-              <span className={`font-extrabold tracking-tight text-base transition ${
-                activeStyle === 'editorial' 
-                  ? isDark ? 'font-serif text-[#f7f5f0]' : 'font-serif text-stone-900' 
-                  : activeStyle === 'geometric' 
-                    ? isDark ? 'font-sans font-black text-zinc-100' : 'font-sans font-black text-zinc-900' 
-                    : isDark ? 'text-[#e4e4e7] hover:text-white font-display' : 'text-zinc-800 hover:text-zinc-950 font-display'
-              }`}>
-                刘昊然<span className={`${activeStyle === 'editorial' ? isDark ? 'text-stone-300 italic' : 'text-stone-500 italic' : activeStyle === 'geometric' ? 'text-red-500 font-bold' : 'text-gradient-cyan-violet'}`}>Turbo</span>
-              </span>
+              <span className={`flex items-center justify-center w-8 h-8 text-base font-black leading-none select-none transition ${
+                activeStyle === 'editorial'
+                  ? isDark ? 'rounded-sm font-serif bg-stone-200 text-stone-900' : 'rounded-sm font-serif bg-stone-900 text-stone-50'
+                  : activeStyle === 'geometric'
+                    ? isDark ? 'rounded-none bg-red-500 text-white border-2 border-zinc-100' : 'rounded-none bg-red-500 text-white'
+                    : isDark ? 'rounded-lg bg-zinc-100 text-zinc-900' : 'rounded-lg bg-zinc-900 text-white shadow-sm shadow-zinc-900/20'
+              }`}>T</span>
             </div>
             
             <div className={`hidden sm:flex items-center space-x-1.5 px-2 py-0.5 rounded-full ${
@@ -177,7 +175,7 @@ export default function App() {
                 activeStyle === 'editorial' 
                   ? isDark ? 'bg-stone-400' : 'bg-stone-500' 
                   : activeStyle === 'geometric' 
-                    ? 'bg-red-500 animate-none' 
+                    ? 'bg-emerald-500' 
                     : 'bg-emerald-400'
               }`} />
               <span className={`text-[9px] font-semibold font-mono tracking-wider ${
@@ -267,17 +265,29 @@ export default function App() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.96 }}
               transition={{ duration: 0.18, ease: 'easeOut' }}
-              className="w-[min(calc(100vw-48px),420px)] p-3 bg-zinc-950/95 border-2 border-zinc-800/90 rounded-2xl flex flex-col items-stretch gap-2 shadow-[0_15px_40px_rgba(0,0,0,0.8)] backdrop-blur-md"
+              className={`w-[min(calc(100vw-48px),420px)] p-3 border-2 rounded-2xl flex flex-col items-stretch gap-2 backdrop-blur-md ${
+                isDark
+                  ? 'bg-zinc-950/95 border-zinc-800/90 shadow-[0_15px_40px_rgba(0,0,0,0.8)]'
+                  : 'bg-white/95 border-zinc-200 shadow-[0_15px_40px_rgba(15,23,42,0.18)]'
+              }`}
             >
-              <div className="flex items-center justify-between gap-3 px-1 text-[10px] uppercase font-mono tracking-wider font-bold text-zinc-400">
+              <div className={`flex items-center justify-between gap-3 px-1 text-[10px] uppercase font-mono tracking-wider font-bold ${
+                isDark ? 'text-zinc-400' : 'text-zinc-500'
+              }`}>
                 <div className="flex items-center gap-1.5 min-w-0">
-                  <Sparkles className="w-3.5 h-3.5 shrink-0 text-yellow-400 animate-spin [animation-duration:8s]" />
+                  <Sparkles className={`w-3.5 h-3.5 shrink-0 animate-spin [animation-duration:8s] ${
+                    isDark ? 'text-yellow-400' : 'text-amber-500'
+                  }`} />
                   <span className="truncate">视觉设计风格对比沙盒 // Creative Sandbox</span>
                 </div>
                 <button
                   type="button"
                   onClick={() => setIsSandboxOpen(false)}
-                  className="p-1 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900 transition-colors cursor-pointer"
+                  className={`p-1 rounded-lg transition-colors cursor-pointer ${
+                    isDark
+                      ? 'text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900'
+                      : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
+                  }`}
                   aria-label="收起视觉风格沙盒"
                   title="收起"
                 >
@@ -299,8 +309,12 @@ export default function App() {
                         }}
                         className={`flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer whitespace-nowrap ${
                           isSelected 
-                            ? 'bg-zinc-800 text-white ring-2 ring-zinc-700 shadow-md' 
-                            : 'text-zinc-500 hover:text-zinc-400 hover:bg-zinc-900'
+                            ? (isDark
+                                ? 'bg-zinc-800 text-white ring-2 ring-zinc-700 shadow-md'
+                                : 'bg-zinc-900 text-white ring-2 ring-zinc-300 shadow-md')
+                            : (isDark
+                                ? 'text-zinc-500 hover:text-zinc-400 hover:bg-zinc-900'
+                                : 'text-zinc-500 hover:text-zinc-700 hover:bg-zinc-100')
                         }`}
                       >
                         <IconComp className={`w-3.5 h-3.5 ${style.color}`} />
@@ -310,15 +324,23 @@ export default function App() {
                   })}
                 </div>
 
-                <div className="hidden sm:block w-[1px] h-6 bg-zinc-800 self-center mx-1" />
+                <div className={`hidden sm:block w-[1px] h-6 self-center mx-1 ${
+                  isDark ? 'bg-zinc-800' : 'bg-zinc-200'
+                }`} />
 
-                <div className="flex items-center justify-center bg-zinc-900 rounded-xl p-0.5 border border-zinc-800/80">
+                <div className={`flex items-center justify-center rounded-xl p-0.5 border ${
+                  isDark ? 'bg-zinc-900 border-zinc-800/80' : 'bg-zinc-100 border-zinc-200'
+                }`}>
                   <button
                     type="button"
                     onClick={() => setIsDark(false)}
                     aria-label="浅色模式"
                     aria-pressed={!isDark}
-                    className={`p-1.5 rounded-lg transition-all cursor-pointer ${!isDark ? 'bg-zinc-700 text-yellow-400 shadow-sm' : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800'}`}
+                    className={`p-1.5 rounded-lg transition-all cursor-pointer ${
+                      !isDark
+                        ? 'bg-white text-amber-500 shadow-sm ring-1 ring-zinc-200'
+                        : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800'
+                    }`}
                     title="切换为浅色模式"
                   >
                     <Sun className="w-3.5 h-3.5" />
@@ -328,7 +350,11 @@ export default function App() {
                     onClick={() => setIsDark(true)}
                     aria-label="深色模式"
                     aria-pressed={isDark}
-                    className={`p-1.5 rounded-lg transition-all cursor-pointer ${isDark ? 'bg-zinc-700 text-cyan-300 shadow-sm' : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800'}`}
+                    className={`p-1.5 rounded-lg transition-all cursor-pointer ${
+                      isDark
+                        ? 'bg-zinc-700 text-cyan-300 shadow-sm'
+                        : 'text-zinc-500 hover:text-zinc-700 hover:bg-zinc-200'
+                    }`}
                     title="切换为深色模式"
                   >
                     <Moon className="w-3.5 h-3.5" />
@@ -343,14 +369,22 @@ export default function App() {
           type="button"
           onClick={() => setIsSandboxOpen((current) => !current)}
           aria-expanded={isSandboxOpen}
-          className={`flex items-center gap-2 px-3.5 py-2.5 rounded-2xl border-2 bg-zinc-950/95 backdrop-blur-md shadow-[0_15px_40px_rgba(0,0,0,0.55)] transition-all cursor-pointer ${
-            isSandboxOpen
-              ? 'border-zinc-700 text-zinc-200'
-              : 'border-cyan-500/50 text-zinc-100 hover:border-cyan-400 hover:text-white'
+          className={`flex items-center gap-2 px-3.5 py-2.5 rounded-2xl border-2 backdrop-blur-md transition-all cursor-pointer ${
+            isDark
+              ? `bg-zinc-950/95 shadow-[0_15px_40px_rgba(0,0,0,0.55)] ${
+                  isSandboxOpen
+                    ? 'border-zinc-700 text-zinc-200'
+                    : 'border-cyan-500/50 text-zinc-100 hover:border-cyan-400 hover:text-white'
+                }`
+              : `bg-white/95 shadow-[0_15px_40px_rgba(15,23,42,0.18)] ${
+                  isSandboxOpen
+                    ? 'border-zinc-300 text-zinc-700'
+                    : 'border-cyan-500/60 text-zinc-900 hover:border-cyan-500 hover:text-zinc-950'
+                }`
           }`}
           title={isSandboxOpen ? '收起视觉风格沙盒' : '展开视觉风格沙盒'}
         >
-          <LayoutGrid className="w-4 h-4 text-cyan-300" />
+          <LayoutGrid className={`w-4 h-4 ${isDark ? 'text-cyan-300' : 'text-cyan-600'}`} />
           <span className="text-xs font-bold">视觉风格</span>
         </button>
       </div>
@@ -378,7 +412,11 @@ export default function App() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="fixed bottom-32 right-6 z-40 p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white shadow-xl transition-all cursor-pointer"
+            className={`fixed bottom-32 right-6 z-40 p-2.5 rounded-xl border shadow-xl transition-all cursor-pointer ${
+              isDark
+                ? 'bg-zinc-900 hover:bg-zinc-800 border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white'
+                : 'bg-white hover:bg-zinc-50 border-zinc-200 hover:border-zinc-300 text-zinc-600 hover:text-zinc-900'
+            }`}
             title="返回顶部"
           >
             <ArrowUp className="w-4 h-4" />
